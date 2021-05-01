@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:45:11 by tsignore          #+#    #+#             */
-/*   Updated: 2021/04/29 23:05:10 by tio              ###   ########.fr       */
+/*   Updated: 2021/05/01 17:12:16 by tio              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,20 @@ typedef struct	s_list
 }				t_list;
 
 int		ft_atoi_base(const char *s, const char *base);
+size_t	countchr(char c, char *s);
+size_t	checkbase(char *base);
+
 void	ft_list_push_front(t_list **el, t_list *nw_el);
 size_t	ft_list_size(t_list **el);
 t_list	*ft_list_sort(t_list **el);
 void	*ft_list_remove_if(t_list **el, int (*f)(void*));
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	int		fd;
 	char	str[] = "Without just one nest\nA bird can call the world his home\nLife is your carrier";
+	(void)ac;
+	(void)av;
 
 	ft_write(1, "\nft_strlen\n\n", 13);// ft_strlen
 
@@ -105,7 +110,7 @@ int	main(void)
 	errno = 0;
 	printf("2>[%zi](%i)\n", write(fd, str2, ft_strlen(str2)), errno);
 
-
+/*
 	ft_write(1, "\nft_read\n\n", 11);//ft_read
 
 
@@ -119,7 +124,7 @@ int	main(void)
 	errno = 0;
 	printf("2>[%zi](%i)\n", read(fd, str3, 7), errno);
 
-	/*errno = 0; fd = open("Makefile", O_RDONLY);
+	errno = 0; fd = open("Makefile", O_RDONLY);
 	printf("1>[%zi](%i)", ft_read(fd, str3, 21), errno);
 	ft_write(1, str3, 21);
 	ft_write(1, "\n", 1);
@@ -127,13 +132,16 @@ int	main(void)
 	ft_strcpy(str3, "");
 	printf("2>[%zi](%i)", read(fd, str3, 21), errno);
 	ft_write(1, str3, 21);
-	ft_write(1, "\n", 1);*/
-
+	ft_write(1, "\n", 1);
+*/
 	char *dup = ft_strdup("testing");
 	printf("\n%s\n", dup);
 	free(dup);
 	//ft_write(1, dup, 8);
 	//ft_write(1, "\n", 1);
+
+	if (ac == 2)
+	printf("\n[%zu] %s\n", checkbase(av[1]), av[1]);
 
 	return (0);
 }
