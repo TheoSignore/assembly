@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:45:11 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/01 17:12:16 by tio              ###   ########.fr       */
+/*   Updated: 2021/05/02 21:02:56 by tio              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_list
 
 int		ft_atoi_base(const char *s, const char *base);
 size_t	countchr(char c, char *s);
+size_t	checkmaxchrs(char *str, char *chrs, size_t max);
 size_t	checkbase(char *base);
 
 void	ft_list_push_front(t_list **el, t_list *nw_el);
@@ -142,6 +143,5 @@ int	main(int ac, char **av)
 
 	if (ac == 2)
 	printf("\n[%zu] %s\n", checkbase(av[1]), av[1]);
-
 	return (0);
 }
