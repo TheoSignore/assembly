@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:45:11 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/02 21:02:56 by tio              ###   ########.fr       */
+/*   Updated: 2021/05/04 10:16:53 by tio              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int		ft_atoi_base(const char *s, const char *base);
 size_t	countchr(char c, char *s);
 size_t	checkmaxchrs(char *str, char *chrs, size_t max);
 size_t	checkbase(char *base);
+int		get_index(char c, char *str);
+int		get_sign(char **str);
 
 void	ft_list_push_front(t_list **el, t_list *nw_el);
 size_t	ft_list_size(t_list **el);
@@ -141,7 +143,13 @@ int	main(int ac, char **av)
 	//ft_write(1, dup, 8);
 	//ft_write(1, "\n", 1);
 
-	if (ac == 2)
-	printf("\n[%zu] %s\n", checkbase(av[1]), av[1]);
+//int		get_index(char c, char *str);
+//int		get_sign(char *str);
+	if (ac == 3)
+	{
+		int sign = ft_atoi_base(av[1], av[2]);
+		printf("[%i] %s %s\n", sign, av[1], av[2]);
+		//printf("%zu\n", checkbase(av[2]));
+	}
 	return (0);
 }

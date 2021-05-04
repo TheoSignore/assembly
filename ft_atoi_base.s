@@ -1,13 +1,34 @@
 section .data
-	badchrs db 43, 9, 10, 11, 45, 12, 13, 32, 0
-	; \t, \n, \v, \f, \r, SPACE
+	badchrs		db 43, 9, 10, 11, 12, 13, 32, 43, 45, 0
+	whitespaces db 9, 10, 11, 12, 13, 32, 0
+	msg db " flag ", 0
+
+section .bss
+	ptrtmp resd 1
 
 section .text
+	extern ft_write
 	extern ft_strlen
-	global checkbase
+	global ft_atoi_base
+
+	flag:
+		push rax
+		push rdi
+		push rsi
+		push rdx
+		mov rdi, 1
+		mov rsi, msg
+		mov rdx, 6
+		call ft_write
+		pop rdx
+		pop rsi
+		pop rdi
+		pop rax
+		ret
 
 	countchr: ; chr, str
 		push rsi
+		push rcx
 		mov rax, 0
 		loop00:
 			mov cl, [rsi]
@@ -18,6 +39,7 @@ section .text
 			inc rsi
 			cmp cl, 0
 			jne loop00
+			pop rcx
 			pop rsi
 			ret
 
@@ -55,7 +77,6 @@ section .text
 		call ft_strlen	; chk base
 		cmp rax, 1		; sz
 		jle false02		; ret 0
-
 		mov rsi, rdi ; rdi:base, rsi: base
 		mov rdx, 1	; musn't have dub chr in base
 		call checkmaxchrs
@@ -65,8 +86,7 @@ section .text
 		mov rdx, 0			; musn't have any badchrs in base
 		call checkmaxchrs
 		cmp rax, 0
-		je false02
-		mov rax, 1
+		jne end02
 		jmp end02
 		false02:
 			mov rax, 0
@@ -95,41 +115,69 @@ section .text
 		pop rsi ; < rsi
 		ret
 
-	
-;	ft_atoi_base:	; rdi:str, rsi:base
-;		push rbx ; > rbx
-;		push rcx ; > rcx > rbx
-;		push rdx ; > rdx > rcx > rbx
-;		push r9 ; > r9 > rdx > rcx > rbx
-;		mov rdx, 1
-;		mov rcx, rdi ; sav rdi:str
-;		mov rbx, 0
-;		call ft_strlen
-;		cmp rax, 0
-;		je end05
-;		mov rdi, rsi ; rdi:base
-;		call checkbase
-;		cmp rax, 0
-;		je end05
-;		call ft_strlen
-;		mov r9, rax
-;		mov rdi, rcx ; rdi:str
-;		call getsign
-;		mov rdx, rax ; sign
-;		; another registry required
-;		loop05:
-;			call get_index
-;			cmp rax, -1
-;			je end05
-;			imul rbx, r9
-;			add rbx, rax
-;			jmp loop05
-;		end05:
-;			mov rax, rbx
-;			imul rax, rdx
-;			mov rdi, rcx
-;			pop r9 ; < r9 < rdx < rcx < rbx
-;			pop rdx ; < rdx < rcx < rbx
-;			pop rcx ; < rcx < rbx
-;			pop rbx ; < rbx
-;			ret
+	ft_atoi_base:	; rdi:str, rsi:base
+		push rbx ; > rbx
+		push rcx ; > rcx > rbx
+		push rdx ; > rdx > rcx > rbx
+		push r8 ;  > r8 > rdx > rcx > rbx
+		push r9 ;  > r9 > r8 > rdx > rcx > rbx
+		push r10 ; > r10 > r9 > r8 > rdx > rcx > rbx
+		mov rdx, 1 ; sign
+		mov rbx, 0 ; res
+		call ft_strlen
+		cmp rax, 0
+		je end05
+		mov rcx, rdi ; rcx:str
+		mov rdi, rsi ; rdi:base
+		call checkbase
+		cmp rax, 0
+		je end05
+		call ft_strlen
+		mov r9, rax ; length of the base
+		mov r10, rcx ; r10:rdi
+		mov rdi, 0
+		mov r8, rsi ; r8:base
+		mov rsi, whitespaces
+		; SKIP WHITESPACES
+		dec r10
+		loop04:
+			inc r10
+			mov dil, [r10]
+			call get_index
+			cmp rax, -1
+			jne loop04
+		; DETERMIN SIGN
+		mov rdx, 1
+		dec r10
+		sign:
+			inc r10
+			mov dil, [r10]
+			cmp dil, 43
+			je sign
+			cmp dil, 45
+			jne nxt04
+			imul rdx, -1
+			jmp sign
+		nxt04:
+			mov rsi, r8
+			mov rdi, 0
+		loop05:
+			mov dil, [r10]
+			call get_index
+			cmp rax, -1
+			je end05
+			imul rbx, r9
+			add rbx, rax
+			inc r10
+			jmp loop05
+		end05:
+			mov rax, rbx
+			imul rax, rdx
+			mov rdi, rcx
+			pop r10 ; < r10 < r9 < r8 < rdx < rcx < rbx
+			pop r9 ; < r9 < r8 < rdx < rcx < rbx
+			pop r8 ; < r8 < rdx < rcx < rbx
+			pop rdx ; < rdx < rcx < rbx
+			pop rcx ; < rcx < rbx
+			pop rbx ; < rbx
+			ret
