@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 09:20:31 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/06 10:49:45 by tsignore         ###   ########.fr       */
+/*   Updated: 2021/05/08 13:43:47 by tsignore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBASM_H
@@ -40,7 +40,7 @@ size_t			ft_list_size(t_list *begin);
 
 int				cmp_example(void *a, void *b);
 
-t_list			*ft_list_sort(t_list **begin, int (*cmp)(void*, void*));
+void			ft_list_sort(t_list **begin, int (*cmp)(void*, void*));
 void			ft_list_remove_if(t_list **begin, void* data_ref,
 				int (*cmp)(void*, void*), void (*free_fct)(void*));
 

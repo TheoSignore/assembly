@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:45:11 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/06 15:58:57 by tsignore         ###   ########.fr       */
+/*   Updated: 2021/05/09 17:18:48 by tsignore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	printel(t_list *e)
 {
-	printf("%p| data:%s\t-> %p\n", e, e->data, e->next);
+	printf("%p\n\t%p\n\t%p\n", e, e->data, e->next);
 }
 
 void	print_list(t_list *e)
@@ -51,6 +51,19 @@ void	free_list(t_list *e)
 	e = NULL;
 }
 
+int cmp_example(void *a, void *b)
+{
+	char	*one;
+	char	*two;
+
+	(void)a;
+	(void)b;
+	one = a;
+	two = b;
+	printf("%p\n%p\n", a, b);
+	return (one[0] - two[0]);
+}
+
 int	main(int ac, char **av)
 {
 	t_list	*ptr;
@@ -67,6 +80,7 @@ int	main(int ac, char **av)
 	}
 	printf("Size: %zu\n", ft_list_size(ptr));
 	print_list(ptr);
-	free_list(ptr);
+	ft_list_sort(&ptr, &cmp_example);
+	//free_list(ptr);
 	return (0);
 }

@@ -14,7 +14,8 @@ SRCBNS = ft_strlen.s \
 			ft_atoi_base.s \
 			ft_create_elem.s \
 			ft_list_push_front.s \
-			ft_list_size.s
+			ft_list_size.s \
+			ft_list_sort.s
 
 OBJS	= ${SRCS:.s=.o}
 
