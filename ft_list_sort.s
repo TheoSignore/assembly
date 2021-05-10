@@ -23,49 +23,56 @@ section .text
 		ret
 
 	ft_list_sort: ; rdi:&bg, rsi:int (*cmp)(void* a, void* b)
-		push rbx ; > rbx
-		push rcx ; > rcx > rbx
-		push rdx ; > rdx > rcx > rbx
-		push r8  ; > r8 > rdx > rcx > rbx
-		push r9  ; > r9 > r8 > rdx > rcx > rbx
-		push r10 ; > r10 > r9 > r8 > rdx > rcx > rbx
-		push r11 ; > r11 > r10 > r9 > r8 > rdx > rcx > rbx
-		mov r9, rdi ; r9:&bg
-		mov r10, 0 ; compteur
-		mov rbx, r9 ;						rbx:&a
-		mov r8, rsi ; r8:func
-		mov rdi, [r9]
+		; rsp, rbp, rbx, r12, r13, r14, r15
+		; bubble sort
+		push rbx
+		push r12
+		push r13
+		push r14
+		push r15
+		push rcx
+		push rdx
+		push r8
+		mov rbx, rdi ; rbx:bg
+		mov r12, rsi ; rsi:func
+		mov rdi, [rdi] ; rdi:bg
 		call ft_list_size
-		mov r11, rax
+		mov r13, rax ; r13:size
+		mov r14, 0 ; r14:count
 		bubble:
-			add r10, 1
-			mov rcx, [r9]
-		loop01:
-			mov rdx, rcx
-			add rdx, 8
-			mov rdx, [rdx]
-			mov rdi, [rcx] ;rdi:a
-			mov rsi, [rdx] ; rsi:b
-			;push r8
-			call r8
-
-
-
-
-			;mov rdi, [rcx] ;rdi:a
-			;mov rsi, [rdx] ; rsi:b
-			;pop r8
-			call r8
-
-
+			mov r15, [rbx]
+		loop00:
+			mov rdi, [r15]
+			add r15, 8
+			cmp qword [r15], 0
+			je next
+			mov rcx, r15
+			sub rcx, 8
+			push rcx
+			mov r15, [r15]
+			mov rsi, [r15]
+			call r12
+			pop rcx
+			cmp eax, 0
+			jle loop00
+			;swap data
+			mov rdx, [r15]
+			mov r8, [rcx]
+			mov [rcx], rdx
+			mov [r15], r8
+			jmp loop00
+		next:
+			inc r14
+			cmp r14, r13
+			jle bubble
 		end:
-		mov rdi, r9
-		mov rsi, r8
-		pop r11 ; < r11 < r10 < r9 < rdx < rcx < rbx
-		pop r10 ; < r10 < r9 < r8 < rdx < rcx < rbx
-		pop r9  ; < r9 < r8 < rdx < rcx < rbx
-		pop r8  ; < r8 < rdx < rcx < rbx
-		pop rdx ; < rdx < rcx < rbx
-		pop rcx ; < rcx < rbx
-		pop rbx ; < rbx
+			mov rdi, rbx
+			pop r8
+			pop rdx
+			pop rcx
+			pop r15
+			pop r14
+			pop r13
+			pop r12
+			pop rbx
 		ret
