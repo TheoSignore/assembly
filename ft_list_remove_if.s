@@ -16,7 +16,6 @@ section .text
 		mov r13, rdx ;r13:fcmp
 		mov r14, rcx ;ffree
 		mov r15, rdi;r15:&e
-
 		next:
 			cmp r15, 0
 			je end
@@ -34,6 +33,7 @@ section .text
 			pop rcx
 			cmp rax, 0
 			jne skip
+			mov rdx, [rdx]
 			mov rdi, [rcx]
 			push rdx
 			push rcx
@@ -41,10 +41,8 @@ section .text
 			pop rcx
 			mov rdi, rcx
 			call free
-			mov rdi, rcx
 			pop rdx
-			mov r8, [rdx] ;r8:e->next
-			mov [r15], r8
+			mov [r15], rdx
 			jmp next
 		skip:
 			mov r15, rdx

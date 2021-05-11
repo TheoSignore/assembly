@@ -25,7 +25,7 @@ BNS		= ${SRCBNS:.s=.o}
 NAME	= libasm.a
 
 .s.o:
-		nasm -l lftf -f elf64 $< -o ${<:.s=.o}
+		nasm -f elf64 $< -o ${<:.s=.o}
 
 all:		${NAME}
 
@@ -45,7 +45,7 @@ test:	${NAME}
 		clang -Wall -Wextra -Werror main.c libasm.a
 
 testbns: bonus
-		clang -fsanitize=address -Wall -Wextra -Werror main.c libasm.a
+		clang -Wall -Wextra -Werror main.c libasm.a
 
 re:		fclean all
 

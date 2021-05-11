@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:45:11 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/11 11:59:10 by tsignore         ###   ########.fr       */
+/*   Updated: 2021/05/11 14:15:15 by tsignore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	free_list(t_list **e)
 void ft_rem(void *data)
 {
 	printf("%p|%s\n", data, (char *)data);
-	data = NULL;
+	ft_strcpy(data, "X");
 }
 
 int cmp_example(void *a, void *b)
@@ -67,31 +67,7 @@ int cmp_example(void *a, void *b)
 
 	c = a;
 	d = b;
-	gneh = c[0] - d[0];
+	gneh = ft_strcmp(c, d);
 	//printf("%p|%s\n%p|%s\n\t%i\n",a, c, b, d, gneh);
-	return (gneh);
-}
-
-int	main(int ac, char **av)
-{
-	t_list	*ptr;
-	int		ndx;
-
-	ptr = NULL;
-	printf("Size: %zu\n", ft_list_size(ptr));
-	ft_list_push_front(&ptr, "beg");
-	ndx = 0;
-	while (ndx < ac)
-	{
-		ft_list_push_front(&ptr, av[ndx]);
-		ndx++;
-	}
-	printf("Size: %zu\n", ft_list_size(ptr));
-	print_list(ptr);
-	write(1, "\n", 1);
-	ft_list_remove_if(&ptr, "j", &cmp_example, ft_rem);
-	write(1, "\n", 1);
-	print_list(ptr);
-	free_list(&ptr);
-	return (0);
+	return ();
 }
