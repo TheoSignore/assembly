@@ -5,23 +5,6 @@ section .text
 	extern ft_list_size
 	global ft_list_sort
 
-	flag:
-		push rax
-		push rdi
-		push rsi
-		push rdx
-
-		mov rax, 1
-		mov rdi, 1
-		mov rsi, msg
-		mov rdx, 5
-		syscall
-		pop rdx
-		pop rsi
-		pop rdi
-		pop rax
-		ret
-
 	ft_list_sort: ; rdi:&bg, rsi:int (*cmp)(void* a, void* b)
 		; rsp, rbp, rbx, r12, r13, r14, r15
 		; bubble sort

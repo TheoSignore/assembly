@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:45:11 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/10 15:48:35 by tsignore         ###   ########.fr       */
+/*   Updated: 2021/05/11 11:59:10 by tsignore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,29 @@ void	print_list(t_list *e)
 	e = tmp;
 }
 
-void	free_list(t_list *e)
+void	free_list(t_list **e)
 {
+	t_list	*tmp;
 	t_list	*nxt;
 
 	if (!e)
 		return ;
-	nxt = e->next;
-	free(e);
+	tmp = e[0];
+	nxt = tmp->next;
+	free(tmp);
 	while (nxt)
 	{
-		e = nxt;
-		nxt = e->next;
-		free(e);
+		tmp = nxt;
+		nxt = tmp->next;
+		free(tmp);
 	}
-	e = NULL;
+	tmp = NULL;
+}
+
+void ft_rem(void *data)
+{
+	printf("%p|%s\n", data, (char *)data);
+	data = NULL;
 }
 
 int cmp_example(void *a, void *b)
@@ -71,7 +79,7 @@ int	main(int ac, char **av)
 
 	ptr = NULL;
 	printf("Size: %zu\n", ft_list_size(ptr));
-	ft_list_push_front(&ptr, "whoop");
+	ft_list_push_front(&ptr, "beg");
 	ndx = 0;
 	while (ndx < ac)
 	{
@@ -80,8 +88,10 @@ int	main(int ac, char **av)
 	}
 	printf("Size: %zu\n", ft_list_size(ptr));
 	print_list(ptr);
-	ft_list_sort(&ptr, &cmp_example);
+	write(1, "\n", 1);
+	ft_list_remove_if(&ptr, "j", &cmp_example, ft_rem);
+	write(1, "\n", 1);
 	print_list(ptr);
-	free_list(ptr);
+	free_list(&ptr);
 	return (0);
 }
