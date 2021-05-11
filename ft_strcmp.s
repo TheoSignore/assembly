@@ -5,8 +5,6 @@ section .text
 		push rbx
 		push rcx
 		bgn:
-			push rbx
-			push rcx
 			mov rax, 0
 			mov rbx, 0
 			mov al, [rdi]

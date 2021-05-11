@@ -3,6 +3,7 @@ section .text
 	global ft_write
 
 	ft_write:
+		push rbx
 		mov rax, 1
 		syscall
 		cmp rax, 0
@@ -13,4 +14,5 @@ section .text
 		mov [rax], rbx
 		mov rax, -1
 	end:
+		pop rbx
 		ret

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/26 17:45:11 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/11 15:53:03 by tsignore         ###   ########.fr       */
+/*   Created: 2021/05/11 22:28:57 by tsignore          #+#    #+#             */
+/*   Updated: 2021/05/11 23:03:05 by tsignore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,117 +14,74 @@
 
 void	printel(t_list *e)
 {
-	printf("%s\n", e->data);
+	printf("[%p]\n[%p][%p]-> %s\n[%p]\t->%p\n", e, &(e->data), e->data, e->data, &(e->next), e->next);
 }
 
 void	print_list(t_list *e)
 {
-	t_list	*tmp;
-
-	tmp = e;
-	if (!e)
-		return ;
-	printel(e);
-	e = e->next;
 	while (e)
 	{
 		printel(e);
 		e = e->next;
 	}
-	e = tmp;
 }
 
-void	free_list(t_list **e)
+void	ft_rem(void *data)
 {
-	t_list	*tmp;
-	t_list	*nxt;
+	printf("removing: [%p]\t%s\n", data, (char*)data);
+	for (size_t ndx = 0 ; data[ndx] != '\0' ; ndx++)
+		data[ndx] = 'X';
+	printf("------------->\t%s\n", (char*)data);
+}
 
-	if (!e)
-		return ;
-	tmp = e[0];
-	nxt = tmp->next;
-	free(tmp);
-	while (nxt)
+int		main(int ac, char **av)
+{
+	char	*strs[11];
+	char	str0[] = "Vianney";
+	char	str1[] = "Mindless Self Indulgence";
+	char	str2[] = "Stupeflip";
+	char	str3[] = "Superorganism";
+	char	str4[] = "Gorillaz";
+	char	str5[] = "Magoyond";
+	char	str6[] = "Vianney";
+	char	str7[] = "Master Boot Record";
+	char	str8[] = "Rage Against The Machine";
+	char	str9[] = "Keygen Church";
+	int		ndx;
+	t_list	*ptr;
+	strs[0] = str0;
+	strs[1] = str1;
+	strs[2] = str2;
+	strs[3] = str3;
+	strs[4] = str4;
+	strs[5] = str5;
+	strs[6] = str6;
+	strs[7] = str7;
+	strs[8] = str8;
+	strs[9] = str9;
+	strs[10] = NULL;
+	ptr = NULL;
+
+	ndx = 0;
+	printf("size [%p] %zu\n", ptr, ft_list_size(ptr));
+	ft_list_push_front(&ptr, "BEGIN");
+	if (ac < 2)
 	{
-		tmp = nxt;
-		nxt = tmp->next;
-		free(tmp);
+		while (strs[ndx])
+		{
+			ft_list_push_front(&ptr, strs[ndx]);
+			ndx++;
+		}
 	}
-	tmp = NULL;
-}
+	printf("size [%p] %zu\n", ptr, ft_list_size(ptr));
+	print_list(ptr);
 
-void ft_rem(void *data)
-{
-	printf("%p|%s\n", data, (char *)data);
-	ft_strcpy(data, "X");
-}
-
-int cmp_example(void *a, void *b)
-{
-	unsigned char *c;
-	unsigned char *d;
-	int gneh;
-
-	c = a;
-	d = b;
-	gneh = ft_strcmp(c, d);
-	//printf("%p|%s\n%p|%s\n\t%i\n",a, c, b, d, gneh);
-	return ();
-}
-
-void	say(char *s)
-{
-	write(1, s, strlen(s));
-}
-
-void	test_ftstrlen(void)
-{
-	printf("--- ft_strlen ---\n");
-	printf("NULL - %zu %zu\n", ft_strlen(NULL), strlen(NULL));
-	printf("\"\" - %zu %zu\n", ft_strlen(""), strlen(""));
-	printf("\"hello world\" - %zu %zu\n", ft_strlen("hello"), strlen("world"));
-	printf("\"\" - %zu %zu\n", ft_strlen("hello"), strlen("world"));
-}
-
-void	ftstrcpy(char *a, char *b, char *(*cpy)(char *, const char *))
-{
-	char	*res;
-
-	printf("(\"%s\", \"%s\")\n", a, b);
-	res = (cpy)(a, b);
-	printf("a) %p|%s\nb) %p|%s\nr) %p|%s\n\n", a, a, b, b, res, res);
-}
-
-void	test_ftstrcpy(void)
-{
-	printf("--- ft_strcpy ---\n")
-	char	a = "alliance";
-	char	b = "assembly";
-	write(1, "ft_strcpy", 9);
-	ftstrcpy(a, b, &ft_strcpy);
-	write(1, "strcpy", 9);
-	ftstrcpy(a, b, &strcpy);
-}
-
-int	main(int ac, char **av)
-{
-	if (ac == 2)
+	t_list	*tmp;
+	tmp = ptr;
+	while (tmp)
 	{
-		if (strcmp(av[1], "ft_strlen"))
-			test_ftstrlen();
-		if (strcmp(av[1], "ft_strcpy"))
-			test_ftstrcpy();
-		if (strcmp(av[1], "ft_strcmp"))
-			test_ftstrcmp();
-		if (strcmp(av[1], "ft_write"))
-			test_ftwrite();
-		if (strcmp(av[1], "ft_read"))
-			test_ftread();
-		if (strcmp(av[1], "ft_atoi_base"))
-			test_ftatoibase();
-		if (strcmp(av[1], "ft_list"))
-			test_ftlist();
-		else
-			printf("Unknowm argument.");
+		ptr = ptr->next;
+		free(tmp);
+		tmp = ptr;
 	}
 }
