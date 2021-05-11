@@ -41,11 +41,11 @@ ${NAME}:	${OBJS}
 bonus:	${OBJS} ${BNS}
 		ar rc ${NAME} ${OBJS} ${BNS}
 
-test:	${NAME}
+mytester:	${NAME}
 		clang -Wall -Wextra -Werror main.c libasm.a
 
-testbns: bonus
-		clang -Wall -Wextra -Werror main.c libasm.a
+mytesterbns: bonus
+		clang -Wall -Wextra -Werror -o libasm main.c libasm.a
 
 re:		fclean all
 
