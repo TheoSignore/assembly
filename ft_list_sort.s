@@ -17,6 +17,10 @@ section .text
 		push rdx
 		push r8
 		mov rbx, rdi ; rbx:bg
+		cmp rsi, 0
+		je end
+		cmp rdi, 0
+		je end
 		mov r12, rsi ; rsi:func
 		mov rdi, [rdi] ; rdi:bg
 		call ft_list_size

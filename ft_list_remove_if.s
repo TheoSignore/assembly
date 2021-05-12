@@ -11,6 +11,10 @@ section .text
 		push r8
 		push rcx
 		push rdx
+		cmp rdx, 0
+		je end
+		cmp rcx, 0
+		je end
 		mov rbx, rdi ;rbx:&e
 		mov r12, rsi ;r12:ref
 		mov r13, rdx ;r13:fcmp

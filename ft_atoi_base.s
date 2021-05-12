@@ -1,30 +1,11 @@
 section .data
 	badchrs		db 43, 9, 10, 11, 12, 13, 32, 43, 45, 0
 	whitespaces db 9, 10, 11, 12, 13, 32, 0
-	msg db " flag ", 0
-
-section .bss
-	ptrtmp resd 1
 
 section .text
 	extern ft_write
 	extern ft_strlen
 	global ft_atoi_base
-
-	flag:
-		push rax
-		push rdi
-		push rsi
-		push rdx
-		mov rdi, 1
-		mov rsi, msg
-		mov rdx, 6
-		call ft_write
-		pop rdx
-		pop rsi
-		pop rdi
-		pop rax
-		ret
 
 	countchr: ; chr, str
 		push rsi
@@ -122,12 +103,18 @@ section .text
 		push r8 ;  > r8 > rdx > rcx > rbx
 		push r9 ;  > r9 > r8 > rdx > rcx > rbx
 		push r10 ; > r10 > r9 > r8 > rdx > rcx > rbx
+		mov rbx, 0
+		mov rdx, 0
+		mov rcx, rdi ; rcx:str
+		cmp rdi, 0
+		je end05
+		cmp rsi, 0
+		je end05
 		mov rdx, 1 ; sign
 		mov rbx, 0 ; res
 		call ft_strlen
 		cmp rax, 0
 		je end05
-		mov rcx, rdi ; rcx:str
 		mov rdi, rsi ; rdi:base
 		call checkbase
 		cmp rax, 0

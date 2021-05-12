@@ -6,7 +6,7 @@
 /*   By: tsignore <tsignore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 22:28:57 by tsignore          #+#    #+#             */
-/*   Updated: 2021/05/12 09:47:49 by tsignore         ###   ########.fr       */
+/*   Updated: 2021/05/12 11:25:30 by tsignore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		main(int ac, char **av)
 	int		ndx;
 	t_list	*ptr;
 	char	rep;
-	
+
 	strs[0] = str0;
 	strs[1] = str1;
 	strs[2] = str2;
@@ -85,11 +85,12 @@ int		main(int ac, char **av)
 	strs[9] = str9;
 	strs[10] = NULL;
 	ptr = NULL;
-	ndx = 0;
 	(void)av;
 	printf("--- ft_atoi_base ---\n");
+	ndx = ft_atoi_base(NULL, "01");//
+	ndx = ft_atoi_base("1972", NULL);//
 	if (ac >= 3)
-		printf("[%s] \"%s\" => %i\n", av[2], av[1], ft_atoi_base(av[1], av[2]));
+		printf("[%s] \"%s\" => %i\n", av[2], av[1], ft_atoi_base(av[1], av[2]));//
 	else
 		printf("No argument supplied.\n");
 	write(1, "next ? y/n: ", 12);
@@ -98,20 +99,26 @@ int		main(int ac, char **av)
 		return (free_list(ptr));
 	system("clear");
 	printf("--- ft_list ---\n");
-	printf("size [%p] %zu\n\n", ptr, ft_list_size(ptr));
-	ft_list_push_front(&ptr, "BEGIN");
+	printf("size [%p] %zu\n\n", ptr, ft_list_size(ptr));//
+	ft_list_push_front(&ptr, "BEGIN");//
+	ndx = 0;
 	while (strs[ndx])
 	{
-		ft_list_push_front(&ptr, strs[ndx]);
+		ft_list_push_front(&ptr, strs[ndx]);//
 		ndx++;
 	}
-	printf("size [%p] %zu\n\n", ptr, ft_list_size(ptr));
+	printf("size [%p] %zu\n\n", ptr, ft_list_size(ptr));//
 	print_list(ptr);
 	printf("-- removing the Vianneys lol --\n");
-	ft_list_remove_if(&ptr, "Vianney", &fcmp, &ft_rem);
+	ft_list_remove_if(NULL, "Vianney", &fcmp, &ft_rem);//
+	ft_list_remove_if(&ptr, "Vianney", NULL, NULL);//
+	ft_list_remove_if(&ptr, "Vianney", &fcmp, &ft_rem);//
 	printf("\n");
 	print_list(ptr);
-	ft_list_sort(&ptr, &fcmp);
+	ft_list_sort(NULL, &fcmp);//
+	ft_list_sort(&ptr, NULL);//
+	ft_list_sort(&ptr, &fcmp);//
 	printf("-- sorted --\n");
 	print_list(ptr);
+	return (free_list(ptr));
 }
