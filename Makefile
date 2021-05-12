@@ -24,6 +24,8 @@ BNS		= ${SRCBNS:.s=.o}
 
 NAME	= libasm.a
 
+BONUS_NAME	= libasm_bonus.a
+
 .s.o:
 		nasm -f elf64 $< -o ${<:.s=.o}
 
@@ -33,17 +35,16 @@ clean:
 		rm -f ${OBJS} ${BNS}
 
 fclean:		clean
-		rm -f ${NAME} a.out
+		rm -f ${NAME} ${BONUS_NAME} libasm_bonus
 
 ${NAME}:	${OBJS}
 		ar rc ${NAME} ${OBJS}
 
 bonus:	${OBJS} ${BNS}
-		ar rc ${NAME} ${OBJS} ${BNS}
+		ar rc ${BONUS_NAME} ${OBJS} ${BNS}
 
 mytesterbns: bonus
-		clang -Wall -Wextra -Werror -o libasm_bonus main.c libasm.a
-		./libasm_bonus
+		clang -Wall -Wextra -Werror -o libasm_bonus main.c libasm_bonus.a
 
 re:		fclean all
 
